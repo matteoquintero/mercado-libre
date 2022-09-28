@@ -1,13 +1,13 @@
-import { Product } from "../types/product";
-import { responseMercadoLibre } from "../types/response";
+import { Product, ProductDetail } from "../types/product";
+import { responseProducts, responseProduct } from "../types/product";
 import { Category } from "../types/types";
 import { fetchData } from "./fetch";
 
-export const getProducts = (filter:string):Promise<responseMercadoLibre> => {
-    const url ='https://api.mercadolibre.com/sites/MLA/search?limit=4&q='+filter;
+export const getProducts = (filter:string):Promise<responseProducts> => {
+    const url =`https://api.mercadolibre.com/sites/MLA/search?limit=4&q=${filter}`;
     let products: Array<Product>;
     let categories: Category;
-    let responseMercadoLibre: responseMercadoLibre = {
+    let responseProducts: responseProducts = {
         author:{
             name:'',
             lastname:''
@@ -38,9 +38,9 @@ export const getProducts = (filter:string):Promise<responseMercadoLibre> => {
                     (category: any) => { return category.name }
                 )
 
-            responseMercadoLibre.items = products;
-            responseMercadoLibre.categories = categories;
-            resolve(responseMercadoLibre)
+            responseProducts.items = products;
+            responseProducts.categories = categories;
+            resolve(responseProducts)
         })
         .catch(error => {
             console.log({error})
@@ -48,3 +48,47 @@ export const getProducts = (filter:string):Promise<responseMercadoLibre> => {
         })
     });
 }
+
+
+export const getProduct = (id:string):Promise<responseProduct> => {
+    let productDetail:ProductDetail;
+    let responseProduct:responseProduct = {
+        author: {
+            name: 's',
+            lastname: ''
+        },
+        item: undefined
+    }    
+    return new Promise((resolve, reject) => {
+        Promise.all([
+            fetchData(`https://api.mercadolibre.com/items/${id}`),
+            fetchData(`https://api.mercadolibre.com/items/${id}/description`)
+        ]).then(function (responses) {
+            return Promise.all(responses.map(function (response) {
+                return response;
+            }));
+        }).then(function (data:any) {
+            productDetail = {
+                id: data[0].id,
+                title: data[0].title,
+                picture: data[0].thumbnail,
+                condition: data[0].condition,
+                free_shipping: data[0].shipping.free_shipping,
+                sold_quantity: data[0].sold_quantity,
+                description: data[1].plain_text,
+                price:{
+                    currency: data[0].currency_id,
+                    amount: data[0].price,
+                    decimals: 0
+                }
+            }
+            responseProduct.item = productDetail
+            resolve(responseProduct)
+        }).catch(function (error) {
+            console.log({error});
+            reject(true)
+        });
+    });
+
+}
+
