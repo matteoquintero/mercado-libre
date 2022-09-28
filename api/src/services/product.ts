@@ -19,18 +19,18 @@ export const getProducts = (filter:string):Promise<responseProducts> => {
         fetchData(url)
         .then(data => {
             //Map data to create list of product
+            console.log({data})
             products = data.results.map((product: any) => ({
-                    id: product.id,
-                    title: product.title,
-                    picture: product.thumbnail,
-                    condition: product.condition,
-                    free_shipping: product.shipping.free_shipping,
-                    address: Object.values(product.address).join(' ')
- 
+                    id: product.id || null,
+                    title: product.title || null,
+                    picture: product.thumbnail || null,
+                    condition: product.condition || null,
+                    free_shipping: product.shipping.free_shipping || null,
+                    address: Object.values(product.address).join(' ') || null
 			}));
 
             //Map and filter data to create list of categories
-            categories = data.available_filters.find( 
+            categories = data.filters.find( 
                     (data: { id: string; }) => data.id == 'category'
                 )
                 .values
