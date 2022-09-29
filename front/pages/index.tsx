@@ -1,26 +1,18 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-
+import SearchBox from '../components/search-box'
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Buscar</title>
         <meta name="description" content="Caja busqueda mercado libre" />
         <link rel="icon" href="/logo.png" />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome
-        </h1>
-
+      <SearchBox></SearchBox>
+      <main>
       </main>
-
-      <footer className={styles.footer}>
-
+      <footer>
       </footer>
     </div>
   )
