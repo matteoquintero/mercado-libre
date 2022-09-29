@@ -10,10 +10,6 @@ const Home: NextPage = () => {
         <link rel="icon" href="/logo.png" />
       </Head>
       <SearchBox></SearchBox>
-      <main>
-      </main>
-      <footer>
-      </footer>
     </div>
   )
 }

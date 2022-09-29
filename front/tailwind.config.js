@@ -12,8 +12,16 @@ module.exports = {
         'gray-brand': '#999999',
         'white-brand': '#EEEEEE',
         'blue-brand': '#3483FA; ' 
-      }     
+      },
+      width: {
+        mercado: '680px',
+      }      
     },
+    fontFamily: {
+      'thin': ['NovaThin'],
+      'regular': ['NovaRegular'],
+      'bold': ['NovaBold'],
+    }   
   },
   plugins: [],
 }

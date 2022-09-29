@@ -24,6 +24,9 @@ a {
 :focus-visible {
   outline: none;
 }
+button{
+  width: -webkit-fill-available;
+}
 
 @media (prefers-color-scheme: dark) {
   html {

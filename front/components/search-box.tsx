@@ -14,7 +14,9 @@ const SearchBox = () => {
     return(
         <header className='grid grid-cols-12 gap-4 bg-yellow-brand h-14'>
             <div className="flex items-center col-span-1 col-start-2">
+            <a href={`/`}>
                 <Image src="/logo.png" alt='Logo mercado libre' width={42} height={32}></Image>
+            </a>                
             </div>
             <div className="flex items-center col-span-9">
                 <form className="relative w-full" onSubmit={handleSubmit} autoComplete='off'>
