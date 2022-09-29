@@ -19,7 +19,6 @@ export const getProducts = (filter:string):Promise<responseProducts> => {
         fetchData(url)
         .then(data => {
             //Map data to create list of product
-            console.log({data})
             products = data.results.map((product: any) => ({
                     id: product.id || null,
                     title: product.title || null,
@@ -30,14 +29,16 @@ export const getProducts = (filter:string):Promise<responseProducts> => {
 			}));
 
             //Map and filter data to create list of categories
-            categories = data.filters.find( 
+            if(  data.filters.find( (data: { id: string; }) => data.id == 'category')){
+                categories = data.filters.find( 
                     (data: { id: string; }) => data.id == 'category'
                 )
                 .values
                 .map(
                     (category: any) => { return category.name }
                 )
-
+            }
+ 
             responseProducts.items = products;
             responseProducts.categories = categories;
             resolve(responseProducts)
